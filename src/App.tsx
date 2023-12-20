@@ -1,24 +1,26 @@
-import { useEffect, useState } from "react";
-import {
-  TOURNAMENT_URL,
-  fetchDetails,
-  fetchTournamentDetailType,
-} from "./utils/fetch";
+import { useEffect } from "react";
+import { TOURNAMENT_URL, fetchDetails } from "./utils/fetch";
 import GameComponent from "./components/GameComponent";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setTournaments } from "./store/slice/tournamentSlice";
+import { RootState } from "./store/store";
 function App() {
-  const [details, setDetails] = useState<fetchTournamentDetailType[]>();
+  const dispatch = useDispatch();
+  const tournamentDetails = useSelector(
+    (state: RootState) => state.tournamentSlice.data
+  );
+
   useEffect(() => {
     const detail = fetchDetails(TOURNAMENT_URL);
     detail
-      .then((detail) => setDetails(detail))
+      .then((detail) => dispatch(setTournaments(detail)))
       .catch((err) => console.error(err));
   }, []);
 
   return (
     <>
       <div className="tournament-container">
-        {details?.map((detail) => (
+        {tournamentDetails?.map((detail) => (
           <GameComponent game={detail.game} teams={detail.teams} />
         ))}
       </div>
