@@ -2,11 +2,11 @@ import React from "react";
 import { Game } from "../utils/propsType";
 import TeamComponent from "./TeamComponent";
 
-function GameComponent({ game, teams }: Game) {
+function GameComponent({ game, gameId, teams }: Game) {
   return (
     <div>
       <h1 className="game">{game}</h1>
-      <TeamComponent teams={teams} />
+      <TeamComponent teams={teams} gameId={gameId} />
     </div>
   );
 }

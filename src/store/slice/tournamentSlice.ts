@@ -1,21 +1,29 @@
-import { Game } from "../../utils/propsType";
+import { AddPlayerAction, Game, UpdatePlayerAction } from "../../utils/propsType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TournamentState {
-    data: Game[];
+    games: Game[];
   }
   const initialState: TournamentState = {
-    data: [],
+    games: [],
   }
   const tournamentSlice = createSlice({
     name: 'tournament',
     initialState,
     reducers: {
         setTournaments: (state, action: PayloadAction<Game[]>) => {
-        state.data = action.payload;        
+        state.games = action.payload;        
       },
+      updatePlayer: (state, action: PayloadAction<UpdatePlayerAction>) => {
+        const { gameId, teamIndex, playerIndex, name, age } = action.payload;
+        state.games[gameId].teams[teamIndex].players[playerIndex] = {name,age};
+      },
+      addPlayer: (state, action: PayloadAction<AddPlayerAction>) => {
+        const { gameId, teamIndex, name, age } = action.payload;
+        state.games[gameId].teams[teamIndex].players.unshift({name,age});
+      }
     },
   });
 
-  export const {setTournaments} = tournamentSlice.actions;
+  export const {setTournaments,updatePlayer,addPlayer} = tournamentSlice.actions;
   export default tournamentSlice.reducer;

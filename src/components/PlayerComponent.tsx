@@ -1,13 +1,23 @@
 import React, { ChangeEvent, useState } from "react";
 import { Player } from "../utils/propsType";
 import { useDispatch } from "react-redux";
+import { updatePlayer } from "../store/slice/tournamentSlice";
 
 interface PlayerComponentProps {
   playerName?: string;
   playerAge?: number;
+  gameId?: number;
+  teamIndex?: number;
+  playerIndex?: number;
 }
 
-function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
+function PlayerComponent({
+  playerName,
+  playerAge,
+  gameId,
+  teamIndex,
+  playerIndex,
+}: PlayerComponentProps) {
   const dispatch = useDispatch();
   const [player, setPlayer] = useState<Player>({
     name: playerName,
@@ -23,6 +33,18 @@ function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         ? Number(event.target.value)
         : player.age,
     });
+  };
+  const handleSave = () => {
+    console.log("save");
+    dispatch(
+      updatePlayer({
+        gameId: gameId!,
+        teamIndex: teamIndex!,
+        playerIndex: playerIndex!,
+        name: player.name!,
+        age: player.age!,
+      })
+    );
   };
   return (
     <div className="player">
@@ -42,9 +64,10 @@ function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         onChange={handleAgeChange}
         placeholder={"Age"}
       />
-      <button type="button" className="save-button">
+      <button type="button" className="save-button" onClick={handleSave}>
         Save
       </button>
+      <p>{playerIndex}</p>
     </div>
   );
 }

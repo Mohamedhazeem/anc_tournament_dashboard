@@ -7,7 +7,7 @@ import { RootState } from "./store/store";
 function App() {
   const dispatch = useDispatch();
   const tournamentDetails = useSelector(
-    (state: RootState) => state.tournamentSlice.data
+    (state: RootState) => state.tournamentSlice.games
   );
 
   useEffect(() => {
@@ -20,8 +20,13 @@ function App() {
   return (
     <>
       <div className="tournament-container">
-        {tournamentDetails?.map((detail) => (
-          <GameComponent game={detail.game} teams={detail.teams} />
+        {tournamentDetails?.map((detail, gameId) => (
+          <GameComponent
+            key={gameId}
+            game={detail.game}
+            gameId={gameId}
+            teams={detail.teams}
+          />
         ))}
       </div>
     </>

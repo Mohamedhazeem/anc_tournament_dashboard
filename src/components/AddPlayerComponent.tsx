@@ -1,16 +1,18 @@
 import React, { ChangeEvent, useState } from "react";
 import { Player } from "../utils/propsType";
+import { useDispatch } from "react-redux";
+import { addPlayer } from "../store/slice/tournamentSlice";
 
 interface PlayerComponentProps {
-  playerName?: string;
-  playerAge?: number;
-  isAddPlayer?: boolean;
+  gameId?: number;
+  teamIndex?: number;
 }
 
-function AddPlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
+function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
+  const dispatch = useDispatch();
   const [PlayerData, setPlayerData] = useState<Player>({
-    name: playerName,
-    age: playerAge,
+    name: "",
+    age: 0,
   });
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayerData({ ...PlayerData, name: event.target.value });
@@ -22,6 +24,19 @@ function AddPlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         ? Number(event.target.value)
         : PlayerData.age,
     });
+  };
+  const handleAdd = () => {
+    console.log(
+      `add ${gameId!} and ${teamIndex!} with player name ${PlayerData.name!} and age is ${PlayerData.age!}`
+    );
+    dispatch(
+      addPlayer({
+        gameId: gameId!,
+        teamIndex: teamIndex!,
+        name: PlayerData.name!,
+        age: PlayerData.age!,
+      })
+    );
   };
 
   return (
@@ -42,7 +57,7 @@ function AddPlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         onChange={handleAgeChange}
         placeholder={"Age"}
       />
-      <button type="button" className="save-button">
+      <button type="button" className="save-button" onClick={handleAdd}>
         Add
       </button>
     </div>
