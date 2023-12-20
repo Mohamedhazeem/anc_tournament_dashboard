@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --game-color: #f0f1f0;
+    --input-unfocus-color: #e6e6e6;
+    --input-focus-color: #f7f7f7;
+    --button-unfocus-color: #a888ea;
+    --buton-focus-color: #723ae0;
+  }
+
+.tournament-container{
+    @apply flex flex-col items-center justify-center;
+}
+.game{
+    @apply text-lg font-bold p-2 bg-[var(--game-color)];
+}
+.team-name{
+    @apply p-3 font-semibold ;
+}
+.team-list{
+    @apply flex flex-col gap-4;
+}
+.player{
+    @apply flex gap-5 mx-5;
+}
+.player-name{
+    @apply w-3/4 pl-[15px] bg-[var(--input-unfocus-color)] rounded-md;
+}
+.player-age{
+    @apply w-20 pl-[15px] bg-[var(--input-unfocus-color)] rounded-md;
+}
+.save-button{
+    @apply p-2 w-20 bg-[var(--button-unfocus-color)] rounded-md;
+}
