@@ -8,7 +8,6 @@ interface TeamComponentProps {
 }
 
 function TeamComponent({ teams }: TeamComponentProps) {
-  const [isEdit, setIsEdit] = useState(false);
   return (
     <ul>
       {teams.map((team, index) => (

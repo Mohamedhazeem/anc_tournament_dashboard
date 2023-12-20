@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { Player } from "../utils/propsType";
+import { useDispatch } from "react-redux";
 
 interface PlayerComponentProps {
   playerName?: string;
@@ -7,6 +8,7 @@ interface PlayerComponentProps {
 }
 
 function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
+  const dispatch = useDispatch();
   const [player, setPlayer] = useState<Player>({
     name: playerName,
     age: playerAge,
@@ -21,9 +23,6 @@ function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         ? Number(event.target.value)
         : player.age,
     });
-  };
-  const handleSave = () => {
-    //console.log
   };
   return (
     <div className="player">

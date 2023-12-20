@@ -23,6 +23,7 @@ function AddPlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         : PlayerData.age,
     });
   };
+
   return (
     <div className="player">
       <input
