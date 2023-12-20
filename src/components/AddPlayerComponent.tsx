@@ -4,26 +4,24 @@ import { Player } from "../utils/propsType";
 interface PlayerComponentProps {
   playerName?: string;
   playerAge?: number;
+  isAddPlayer?: boolean;
 }
 
-function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
-  const [player, setPlayer] = useState<Player>({
+function AddPlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
+  const [PlayerData, setPlayerData] = useState<Player>({
     name: playerName,
     age: playerAge,
   });
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayer({ ...player, name: event.target.value });
+    setPlayerData({ ...PlayerData, name: event.target.value });
   };
   const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayer({
-      ...player,
+    setPlayerData({
+      ...PlayerData,
       age: !isNaN(Number(event.target.value))
         ? Number(event.target.value)
-        : player.age,
+        : PlayerData.age,
     });
-  };
-  const handleSave = () => {
-    //console.log
   };
   return (
     <div className="player">
@@ -31,7 +29,7 @@ function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         className="player-name"
         type="text"
         name="name"
-        value={player.name}
+        value={PlayerData.name}
         onChange={handleNameChange}
         placeholder={"Player Name"}
       />
@@ -39,15 +37,15 @@ function PlayerComponent({ playerName, playerAge }: PlayerComponentProps) {
         className="player-age"
         type="text"
         name="age"
-        value={player.age ? player.age : ""}
+        value={PlayerData.age ? PlayerData.age : ""}
         onChange={handleAgeChange}
         placeholder={"Age"}
       />
       <button type="button" className="save-button">
-        Save
+        Add
       </button>
     </div>
   );
 }
 
-export default PlayerComponent;
+export default AddPlayerComponent;

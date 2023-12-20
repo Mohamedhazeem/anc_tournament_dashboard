@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Team } from "../utils/propsType";
 import PlayerComponent from "./PlayerComponent";
+import AddPlayerComponent from "./AddPlayerComponent";
 
 interface TeamComponentProps {
   teams: Team[];
@@ -14,7 +15,7 @@ function TeamComponent({ teams }: TeamComponentProps) {
         <li key={index}>
           <p className="team-name">{`${team.team_name} (${team.players.length})`}</p>
           <ul className="team-list">
-            <li>{<PlayerComponent isAddPlayer={true} />}</li>
+            <li>{<AddPlayerComponent />}</li>
             {team.players.map((player, playerIndex) => (
               <li key={playerIndex}>
                 <PlayerComponent
