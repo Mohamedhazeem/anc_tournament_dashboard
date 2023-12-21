@@ -49,4 +49,7 @@
 .save-focus-button{
     @apply save-button bg-[var(--buton-focus-color)];
 }
+.button-hover{
+    @apply hover:scale-110;
+}
 /* [var(--button-focus-color)] */

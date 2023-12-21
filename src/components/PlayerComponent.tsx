@@ -70,7 +70,9 @@ function PlayerComponent({
       />
       <button
         type="button"
-        className={`${isEditing ? "save-focus-button" : "save-unfocus-button"}`}
+        className={`transition duration-300 ${
+          isEditing ? "save-focus-button button-hover" : "save-unfocus-button"
+        }`}
         onClick={handleSave}
       >
         Save
