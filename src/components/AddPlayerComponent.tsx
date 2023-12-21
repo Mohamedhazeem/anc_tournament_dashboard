@@ -105,7 +105,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
   return (
     <div className="player">
       <input
-        className="player-name"
+        className={`${isEditing ? "input-focus" : "input-unfocus"} player-name`}
         type="text"
         name="name"
         value={PlayerData.name}
@@ -114,7 +114,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         disabled={handleDisable()}
       />
       <input
-        className="player-age"
+        className={`${isEditing ? "input-focus" : "input-unfocus"} player-age`}
         type="text"
         name="age"
         value={PlayerData.age ? PlayerData.age : ""}

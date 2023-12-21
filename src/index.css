@@ -52,4 +52,6 @@
 .button-hover{
     @apply hover:scale-110;
 }
-/* [var(--button-focus-color)] */
+.extend-button{
+    @apply flex items-center justify-center font-bold text-xl pb-3 ml-5 mt-3 rounded-lg bg-[var(--input-focus-color)] w-10 h-5 cursor-pointer hover:scale-125;
+}
