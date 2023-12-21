@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Team } from "../utils/propsType";
 import PlayerComponent from "./PlayerComponent";
 import AddPlayerComponent from "./AddPlayerComponent";

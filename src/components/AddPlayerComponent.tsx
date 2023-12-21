@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { Player } from "../utils/propsType";
 import { useDispatch } from "react-redux";
 import { addPlayer } from "../store/slice/tournamentSlice";
@@ -14,8 +14,11 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
     name: "",
     age: 0,
   });
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayerData({ ...PlayerData, name: event.target.value });
+    setIsEditing(true);
   };
   const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayerData({
@@ -24,6 +27,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         ? Number(event.target.value)
         : PlayerData.age,
     });
+    setIsEditing(true);
   };
   const handleAdd = () => {
     console.log(
@@ -37,6 +41,8 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         age: PlayerData.age!,
       })
     );
+    setPlayerData({ name: "", age: 0 });
+    setIsEditing(false);
   };
 
   return (
@@ -57,7 +63,11 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         onChange={handleAgeChange}
         placeholder={"Age"}
       />
-      <button type="button" className="save-button" onClick={handleAdd}>
+      <button
+        type="button"
+        className={`${isEditing ? "save-focus-button" : "save-unfocus-button"}`}
+        onClick={handleAdd}
+      >
         Add
       </button>
     </div>

@@ -11,9 +11,12 @@
   }
 
 .tournament-container{
-    @apply flex flex-col items-center justify-center;
+    @apply flex flex-col gap-5 my-5 items-center justify-center;
 }
-.game{
+.game-container{
+    @apply outline outline-2 outline-[var(--game-color)];
+}
+.game-name{
     @apply text-lg font-bold p-2 bg-[var(--game-color)];
 }
 .team-name{
@@ -25,12 +28,25 @@
 .player{
     @apply flex gap-5 mx-5;
 }
+.input-unfocus{
+    @apply bg-[var(--input-unfocus-color)];
+}
+.input-focus{
+    @apply bg-[var(--input-focus-color)];
+}
 .player-name{
-    @apply w-3/4 pl-[15px] bg-[var(--input-unfocus-color)] rounded-md;
+    @apply w-3/4 pl-[15px]  rounded-md;
 }
 .player-age{
-    @apply w-20 pl-[15px] bg-[var(--input-unfocus-color)] rounded-md;
+    @apply w-20 pl-[15px]  rounded-md;
 }
 .save-button{
-    @apply p-2 w-20 bg-[var(--button-unfocus-color)] rounded-md;
+    @apply p-2 w-20 rounded-md;
 }
+.save-unfocus-button{
+    @apply save-button bg-[var(--button-unfocus-color)];
+}
+.save-focus-button{
+    @apply save-button bg-[var(--buton-focus-color)];
+}
+/* [var(--button-focus-color)] */

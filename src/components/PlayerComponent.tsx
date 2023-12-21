@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Player } from "../utils/propsType";
 import { useDispatch } from "react-redux";
 import { updatePlayer } from "../store/slice/tournamentSlice";
@@ -23,8 +23,11 @@ function PlayerComponent({
     name: playerName,
     age: playerAge,
   });
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayer({ ...player, name: event.target.value });
+    setIsEditing(true);
   };
   const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayer({
@@ -33,9 +36,9 @@ function PlayerComponent({
         ? Number(event.target.value)
         : player.age,
     });
+    setIsEditing(true);
   };
   const handleSave = () => {
-    console.log("save");
     dispatch(
       updatePlayer({
         gameId: gameId!,
@@ -45,11 +48,12 @@ function PlayerComponent({
         age: player.age!,
       })
     );
+    setIsEditing(false);
   };
   return (
     <div className="player">
       <input
-        className="player-name"
+        className={`${isEditing ? "input-focus" : "input-unfocus"} player-name`}
         type="text"
         name="name"
         value={player.name}
@@ -57,17 +61,20 @@ function PlayerComponent({
         placeholder={"Player Name"}
       />
       <input
-        className="player-age"
+        className={`${isEditing ? "input-focus" : "input-unfocus"} player-age`}
         type="text"
         name="age"
         value={player.age ? player.age : ""}
         onChange={handleAgeChange}
         placeholder={"Age"}
       />
-      <button type="button" className="save-button" onClick={handleSave}>
+      <button
+        type="button"
+        className={`${isEditing ? "save-focus-button" : "save-unfocus-button"}`}
+        onClick={handleSave}
+      >
         Save
       </button>
-      <p>{playerIndex}</p>
     </div>
   );
 }

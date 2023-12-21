@@ -1,11 +1,10 @@
-import React from "react";
 import { Game } from "../utils/propsType";
 import TeamComponent from "./TeamComponent";
 
 function GameComponent({ game, gameId, teams }: Game) {
   return (
-    <div>
-      <h1 className="game">{game}</h1>
+    <div className="game-container">
+      <h1 className="game-name">{game}</h1>
       <TeamComponent teams={teams} gameId={gameId} />
     </div>
   );
