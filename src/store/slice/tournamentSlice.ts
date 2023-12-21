@@ -20,7 +20,11 @@ interface TournamentState {
       },
       addPlayer: (state, action: PayloadAction<AddPlayerAction>) => {
         const { gameId, teamIndex, name, age } = action.payload;
-        state.games[gameId].teams[teamIndex].players.unshift({name,age});
+        const words = name.split(" ").map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        });
+        const capitalizedName = words.join(" ");    
+        state.games[gameId].teams[teamIndex].players.unshift({name:capitalizedName,age});
       }
     },
   });
