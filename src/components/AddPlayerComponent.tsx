@@ -33,12 +33,16 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
     console.log(
       `add ${gameId!} and ${teamIndex!} with player name ${PlayerData.name!} and age is ${PlayerData.age!}`
     );
+    if (!PlayerData.name || !PlayerData.age) {
+      alert(`Please enter ${PlayerData.name ? "Player Age" : "Player Name"} `);
+      return;
+    }
     dispatch(
       addPlayer({
         gameId: gameId!,
         teamIndex: teamIndex!,
-        name: PlayerData.name!,
-        age: PlayerData.age!,
+        name: PlayerData.name,
+        age: PlayerData.age,
       })
     );
     setPlayerData({ name: "", age: 0 });

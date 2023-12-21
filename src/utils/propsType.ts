@@ -24,3 +24,8 @@ export interface AddPlayerAction{
     name: string;
     age: number;
 }
+export interface RemovePlayerAction{
+  gameId: number; 
+  teamIndex: number; 
+  playerIndex: number;
+}

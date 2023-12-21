@@ -1,4 +1,4 @@
-import { AddPlayerAction, Game, UpdatePlayerAction } from "../../utils/propsType";
+import { AddPlayerAction, Game, RemovePlayerAction, UpdatePlayerAction } from "../../utils/propsType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TournamentState {
@@ -25,9 +25,14 @@ interface TournamentState {
         });
         const capitalizedName = words.join(" ");    
         state.games[gameId].teams[teamIndex].players.unshift({name:capitalizedName,age});
-      }
+      },
+      removePlayer: (state, action: PayloadAction<RemovePlayerAction>) => {
+        const { gameId, teamIndex, playerIndex } = action.payload;
+        state.games[gameId].teams[teamIndex].players.splice(playerIndex, 1);
+    },
+      
     },
   });
 
-  export const {setTournaments,updatePlayer,addPlayer} = tournamentSlice.actions;
+  export const {setTournaments,updatePlayer,addPlayer, removePlayer} = tournamentSlice.actions;
   export default tournamentSlice.reducer;
