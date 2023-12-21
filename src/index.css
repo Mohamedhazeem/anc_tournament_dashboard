@@ -11,25 +11,25 @@
   }
 
 .tournament-container{
-    @apply flex flex-col gap-5 my-5 items-center justify-center;
+    @apply flex flex-col gap-5 my-5 mx-5 items-center justify-center;
 }
 .game-container{
-    @apply outline outline-2 outline-[var(--game-color)];
+    @apply outline outline-2 rounded-md outline-[var(--game-color)];
 }
 .game-name{
     @apply text-lg font-bold p-2 bg-[var(--game-color)];
 }
 .team-name{
-    @apply p-3 font-semibold ;
+    @apply pl-5 py-4 font-semibold ;
 }
 .team-list{
     @apply flex flex-col gap-4;
 }
 .player{
-    @apply flex gap-5 mx-5;
+    @apply flex gap-5 mx-8;
 }
 .input-unfocus{
-    @apply bg-[var(--input-unfocus-color)];
+    @apply bg-[var(--input-unfocus-color)] disabled:text-slate-500;
 }
 .input-focus{
     @apply bg-[var(--input-focus-color)];
@@ -53,5 +53,7 @@
     @apply hover:scale-110;
 }
 .extend-button{
-    @apply flex items-center justify-center font-bold text-xl pb-3 ml-5 mt-3 rounded-lg bg-[var(--input-focus-color)] w-10 h-5 cursor-pointer hover:scale-125;
+    @apply flex items-center justify-center font-bold text-xl pb-3 ml-8 mt-3 rounded-lg 
+     bg-[var(--input-focus-color)] text-slate-500
+     w-10 h-5 cursor-pointer hover:scale-125;
 }

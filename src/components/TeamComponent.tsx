@@ -21,7 +21,7 @@ function TeamComponent({ gameId, teams }: TeamComponentProps) {
   return (
     <ul>
       {teams.map((team, teamIndex) => (
-        <li key={teamIndex}>
+        <li key={teamIndex} className="mb-4">
           <p className="team-name">{`${team.team_name} (${team.players.length})`}</p>
           <ul>
             <li>
