@@ -29,3 +29,8 @@ export interface RemovePlayerAction{
   teamIndex: number; 
   playerIndex: number;
 }
+export interface LastSelectedPlayerAction{
+  gameId: number | null; 
+  teamIndex: number | null; 
+  playerIndex?: number | null;
+}

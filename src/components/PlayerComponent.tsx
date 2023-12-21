@@ -1,7 +1,12 @@
 import { ChangeEvent, useState } from "react";
-import { Player } from "../utils/propsType";
-import { useDispatch } from "react-redux";
-import { removePlayer, updatePlayer } from "../store/slice/tournamentSlice";
+import { LastSelectedPlayerAction, Player } from "../utils/propsType";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removePlayer,
+  setLastSelectedPlayer,
+  updatePlayer,
+} from "../store/slice/tournamentSlice";
+import { RootState } from "../store/store";
 
 interface PlayerComponentProps {
   playerName?: string;
@@ -19,6 +24,10 @@ function PlayerComponent({
   playerIndex,
 }: PlayerComponentProps) {
   const dispatch = useDispatch();
+  const lastSelectedPlayer = useSelector(
+    (state: RootState) => state.tournamentSlice.lastSelectedPlayer
+  );
+
   const [player, setPlayer] = useState<Player>({
     name: playerName,
     age: playerAge,
@@ -28,6 +37,11 @@ function PlayerComponent({
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayer({ ...player, name: event.target.value });
     setIsEditing(true);
+    handleLastSelectedPlayer({
+      gameId: gameId ?? null,
+      teamIndex: teamIndex ?? null,
+      playerIndex,
+    });
   };
   const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayer({
@@ -37,6 +51,35 @@ function PlayerComponent({
         : player.age,
     });
     setIsEditing(true);
+    handleLastSelectedPlayer({
+      gameId: gameId ?? null,
+      teamIndex: teamIndex ?? null,
+      playerIndex,
+    });
+  };
+  const handleDisable = (): boolean => {
+    if (lastSelectedPlayer?.gameId == null) return false;
+    if (
+      lastSelectedPlayer?.gameId == gameId &&
+      lastSelectedPlayer?.teamIndex == teamIndex &&
+      lastSelectedPlayer?.playerIndex == playerIndex
+    ) {
+      return false;
+    }
+    return true;
+  };
+  const handleLastSelectedPlayer = ({
+    gameId,
+    teamIndex,
+    playerIndex,
+  }: LastSelectedPlayerAction) => {
+    dispatch(
+      setLastSelectedPlayer({
+        gameId: gameId,
+        teamIndex: teamIndex,
+        playerIndex: playerIndex,
+      })
+    );
   };
   const handleSave = () => {
     if (!player.age && !player.name) {
@@ -62,6 +105,11 @@ function PlayerComponent({
         age: player.age,
       })
     );
+    handleLastSelectedPlayer({
+      gameId: null,
+      teamIndex: null,
+      playerIndex: null,
+    });
     setIsEditing(false);
   };
   return (
@@ -73,6 +121,7 @@ function PlayerComponent({
         value={player.name}
         onChange={handleNameChange}
         placeholder={"Player Name"}
+        disabled={handleDisable()}
       />
       <input
         className={`${isEditing ? "input-focus" : "input-unfocus"} player-age`}
@@ -81,6 +130,7 @@ function PlayerComponent({
         value={player.age ? player.age : ""}
         onChange={handleAgeChange}
         placeholder={"Age"}
+        disabled={handleDisable()}
       />
       <button
         type="button"
@@ -88,6 +138,7 @@ function PlayerComponent({
           isEditing ? "save-focus-button button-hover" : "save-unfocus-button"
         }`}
         onClick={handleSave}
+        disabled={handleDisable()}
       >
         Save
       </button>
