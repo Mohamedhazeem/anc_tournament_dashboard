@@ -90,6 +90,11 @@ function PlayerComponent({
           playerIndex: playerIndex!,
         })
       );
+      handleLastSelectedPlayer({
+        gameId: null,
+        teamIndex: null,
+        playerIndex: null,
+      });
       return;
     }
     if (!player.name || !player.age) {
