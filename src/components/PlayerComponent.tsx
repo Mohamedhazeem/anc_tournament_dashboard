@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Player } from "../utils/propsType";
 import { useDispatch } from "react-redux";
-import { updatePlayer } from "../store/slice/tournamentSlice";
+import { removePlayer, updatePlayer } from "../store/slice/tournamentSlice";
 
 interface PlayerComponentProps {
   playerName?: string;
@@ -39,13 +39,27 @@ function PlayerComponent({
     setIsEditing(true);
   };
   const handleSave = () => {
+    if (!player.age && !player.name) {
+      dispatch(
+        removePlayer({
+          gameId: gameId!,
+          teamIndex: teamIndex!,
+          playerIndex: playerIndex!,
+        })
+      );
+      return;
+    }
+    if (!player.name || !player.age) {
+      alert(`Please enter ${player.name ? "Player Age" : "Player Name"} `);
+      return;
+    }
     dispatch(
       updatePlayer({
         gameId: gameId!,
         teamIndex: teamIndex!,
         playerIndex: playerIndex!,
-        name: player.name!,
-        age: player.age!,
+        name: player.name,
+        age: player.age,
       })
     );
     setIsEditing(false);
