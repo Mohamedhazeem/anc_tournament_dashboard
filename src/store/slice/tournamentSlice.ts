@@ -18,7 +18,11 @@ const tournamentSlice = createSlice({
       },
       updatePlayer: (state, action: PayloadAction<UpdatePlayerAction>) => {
         const { gameId, teamIndex, playerIndex, name, age } = action.payload;
-        state.games[gameId].teams[teamIndex].players[playerIndex] = {name,age};
+        const words = name.split(" ").map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        });
+        const capitalizedName = words.join(" ");    
+        state.games[gameId].teams[teamIndex].players[playerIndex] = {name:capitalizedName,age};
       },
       addPlayer: (state, action: PayloadAction<AddPlayerAction>) => {
         const { gameId, teamIndex, name, age } = action.payload;
