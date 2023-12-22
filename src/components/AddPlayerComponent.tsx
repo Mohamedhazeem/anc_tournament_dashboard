@@ -40,6 +40,18 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
       teamIndex: teamIndex!,
       playerIndex: -1,
     });
+    checkCanAdd({ ...playerData, [field]: value });
+  };
+  const checkCanAdd = (value: Player) => {
+    if (value.name == "" && value.age == 0 && isEditing) {
+      handleLastSelectedPlayer({
+        gameId: null,
+        teamIndex: null,
+        playerIndex: null,
+      });
+      setPlayerData({ name: "", age: 0 });
+      setIsEditing(false);
+    }
   };
 
   const handleLastSelectedPlayer = ({
