@@ -78,7 +78,8 @@ function PlayerComponent({
     );
   };
   const handleSave = () => {
-    if (!player.age && !player.name) {
+    const { name, age } = player;
+    if (!name && !age) {
       dispatch(
         removePlayer({
           gameId: gameId!,
@@ -93,8 +94,8 @@ function PlayerComponent({
       });
       return;
     }
-    if (!player.name || !player.age) {
-      alert(`Please enter ${player.name ? "Player Age" : "Player Name"} `);
+    if (!name || !age) {
+      alert(`Please enter ${name ? "Player Age" : "Player Name"} `);
       return;
     }
     dispatch(
@@ -102,8 +103,8 @@ function PlayerComponent({
         gameId: gameId!,
         teamIndex: teamIndex!,
         playerIndex: playerIndex!,
-        name: player.name,
-        age: player.age,
+        name: name,
+        age: age,
       })
     );
     handleLastSelectedPlayer({

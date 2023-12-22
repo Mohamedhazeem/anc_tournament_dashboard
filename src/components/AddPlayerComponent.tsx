@@ -17,7 +17,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
   const lastSelectedPlayer = useSelector(
     (state: RootState) => state.tournamentSlice.lastSelectedPlayer
   );
-  const [PlayerData, setPlayerData] = useState<Player>({
+  const [playerData, setPlayerData] = useState<Player>({
     name: "",
     age: 0,
   });
@@ -30,10 +30,10 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
     const value =
       field === "age"
         ? isNaN(Number(event.target.value))
-          ? PlayerData.age
+          ? playerData.age
           : Number(event.target.value)
         : event.target.value;
-    setPlayerData({ ...PlayerData, [field]: value });
+    setPlayerData({ ...playerData, [field]: value });
     setIsEditing(true);
     handleLastSelectedPlayer({
       gameId: gameId!,
@@ -69,7 +69,8 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
   };
 
   const handleAdd = () => {
-    if (!PlayerData.name && !PlayerData.age) {
+    const { name, age } = playerData;
+    if (!name && !age) {
       handleLastSelectedPlayer({
         gameId: null,
         teamIndex: null,
@@ -77,16 +78,16 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
       });
       setIsEditing(false);
       return;
-    } else if (!PlayerData.name || !PlayerData.age) {
-      alert(`Please enter ${PlayerData.name ? "Player Age" : "Player Name"} `);
+    } else if (!name || !age) {
+      alert(`Please enter ${name ? "Player Age" : "Player Name"} `);
       return;
     }
     dispatch(
       addPlayer({
         gameId: gameId!,
         teamIndex: teamIndex!,
-        name: PlayerData.name,
-        age: PlayerData.age,
+        name: name,
+        age: age,
       })
     );
     handleLastSelectedPlayer({
@@ -104,7 +105,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         className={`${isEditing ? "input-focus" : "input-unfocus"} player-name`}
         type="text"
         name="name"
-        value={PlayerData.name}
+        value={playerData.name}
         onChange={(e) => handleInputChange(e, e.target.name)}
         placeholder={"Player Name"}
         disabled={handleDisable()}
@@ -113,7 +114,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         className={`${isEditing ? "input-focus" : "input-unfocus"} player-age`}
         type="text"
         name="age"
-        value={PlayerData.age ? PlayerData.age : ""}
+        value={playerData.age ? playerData.age : ""}
         onChange={(e) => handleInputChange(e, e.target.name)}
         placeholder={"Age"}
         disabled={handleDisable()}
