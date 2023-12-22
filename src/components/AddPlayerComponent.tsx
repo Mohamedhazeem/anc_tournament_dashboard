@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState } from "react";
 import { LastSelectedPlayerAction, Player } from "../utils/propsType";
 import { useDispatch, useSelector } from "react-redux";
 import {

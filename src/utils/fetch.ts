@@ -10,8 +10,7 @@ export const fetchDetails = async (url: string) : Promise<Game[]> => {
   if (!response.ok) {
     throw new Error(`Failed to fetch data: ${response.statusText}`);
   }
-  //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const data: Game[]  = await response.json();
+  const data: Game[]  = await response.json() as Game[];
 
   return data;
 };
