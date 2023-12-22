@@ -23,29 +23,25 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
   });
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayerData({ ...PlayerData, name: event.target.value });
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    const value =
+      field === "age"
+        ? isNaN(Number(event.target.value))
+          ? PlayerData.age
+          : Number(event.target.value)
+        : event.target.value;
+    setPlayerData({ ...PlayerData, [field]: value });
     setIsEditing(true);
     handleLastSelectedPlayer({
-      gameId: gameId ?? null,
-      teamIndex: teamIndex ?? null,
+      gameId: gameId!,
+      teamIndex: teamIndex!,
       playerIndex: -1,
     });
   };
-  const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayerData({
-      ...PlayerData,
-      age: !isNaN(Number(event.target.value))
-        ? Number(event.target.value)
-        : PlayerData.age,
-    });
-    setIsEditing(true);
-    handleLastSelectedPlayer({
-      gameId: gameId ?? null,
-      teamIndex: teamIndex ?? null,
-      playerIndex: -1,
-    });
-  };
+
   const handleLastSelectedPlayer = ({
     gameId,
     teamIndex,
@@ -109,7 +105,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         type="text"
         name="name"
         value={PlayerData.name}
-        onChange={handleNameChange}
+        onChange={(e) => handleInputChange(e, e.target.name)}
         placeholder={"Player Name"}
         disabled={handleDisable()}
       />
@@ -118,7 +114,7 @@ function AddPlayerComponent({ gameId, teamIndex }: PlayerComponentProps) {
         type="text"
         name="age"
         value={PlayerData.age ? PlayerData.age : ""}
-        onChange={handleAgeChange}
+        onChange={(e) => handleInputChange(e, e.target.name)}
         placeholder={"Age"}
         disabled={handleDisable()}
       />

@@ -34,29 +34,25 @@ function PlayerComponent({
   });
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayer({ ...player, name: event.target.value });
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    const value =
+      field === "age"
+        ? isNaN(Number(event.target.value))
+          ? player.age
+          : Number(event.target.value)
+        : event.target.value;
+    setPlayer({ ...player, [field]: value });
     setIsEditing(true);
     handleLastSelectedPlayer({
-      gameId: gameId ?? null,
-      teamIndex: teamIndex ?? null,
-      playerIndex,
+      gameId: gameId!,
+      teamIndex: teamIndex!,
+      playerIndex: playerIndex!,
     });
   };
-  const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayer({
-      ...player,
-      age: !isNaN(Number(event.target.value))
-        ? Number(event.target.value)
-        : player.age,
-    });
-    setIsEditing(true);
-    handleLastSelectedPlayer({
-      gameId: gameId ?? null,
-      teamIndex: teamIndex ?? null,
-      playerIndex,
-    });
-  };
+
   const handleDisable = (): boolean => {
     if (lastSelectedPlayer?.gameId == null) return false;
     if (
@@ -75,9 +71,9 @@ function PlayerComponent({
   }: LastSelectedPlayerAction) => {
     dispatch(
       setLastSelectedPlayer({
-        gameId: gameId,
-        teamIndex: teamIndex,
-        playerIndex: playerIndex,
+        gameId,
+        teamIndex,
+        playerIndex,
       })
     );
   };
@@ -124,7 +120,7 @@ function PlayerComponent({
         type="text"
         name="name"
         value={player.name}
-        onChange={handleNameChange}
+        onChange={(e) => handleInputChange(e, e.target.name)}
         placeholder={"Player Name"}
         disabled={handleDisable()}
       />
@@ -133,7 +129,7 @@ function PlayerComponent({
         type="text"
         name="age"
         value={player.age ? player.age : ""}
-        onChange={handleAgeChange}
+        onChange={(e) => handleInputChange(e, e.target.name)}
         placeholder={"Age"}
         disabled={handleDisable()}
       />
